@@ -26,9 +26,9 @@ console.log('Is unique:', 'aabc'.isUnique());
 // 1.2
 // Check Permutation: Given two strings, write a method to decide if one is a permutation of the other
 
-String.prototype.permutation = function(thisArg) {
+String.prototype.permutation = function(arg) {
     
-    if (this === '' || thisArg === '' || this.length > thisArg.length) {
+    if (this === '' || arg === '' || this.length > arg.length) {
         return false;
     };
 
@@ -63,7 +63,7 @@ String.prototype.URLify = function() {
         }
     };
     
-    return Object.values(obj).toString().split(',').join('');
+    return Object.values(obj).join('');
 }
 
 console.log('das g ma   '.URLify());
@@ -87,6 +87,16 @@ console.log('das g ma   '.URLify());
 // pale, bale -> true
 // pale, bake -> false
 
+String.prototype.oneAway = function(arg) {
+    
+    
+};
+
+console.log(`One away:`, 'pale'.oneAway('ple'));     // true
+console.log(`One away:`, 'pales'.oneAway('pale'));   // true
+console.log(`One away:`, 'pale'.oneAway('bale'));    // true
+console.log(`One away:`, 'pale'.oneAway('bake'));    // false
+console.log(`One away:`, 'paler'.oneAway('bake'));    // false
 
 
 // 1.6
