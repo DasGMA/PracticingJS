@@ -27,15 +27,54 @@ console.log('Is unique:', 'aabc'.isUnique());
 // Check Permutation: Given two strings, write a method to decide if one is a permutation of the other
 
 String.prototype.permutation = function(arg) {
-    
-    if (this === '' || arg === '' || this.length > arg.length) {
-        return false;
-    };
+    const s1Map = getHashMap(this);
+    const queue = [];
 
-    
+    if (!this || !arg || this.length > arg.length) {
+        return false;
+    }
+
+    for (const char of this) {
+        if (s1Map[char] > 0) {
+            s1Map[char]--;
+            queue.push(char);
+            
+            if (queue.length === this.length) {
+                return true;
+            }
+
+        } else {
+            while (queue.length) {
+                const firstIndex = queue.shift();
+
+                if (s1Map[firstIndex] !== char) {
+                    s1Map[firstIndex]++;
+                } else {
+                    queue.push(char);
+                    break;
+                }
+            }
+        }
+    }
+
+    return false;
+};
+
+function getHashMap(str) {
+    const map = {};
+
+    for (let i = 0; i < str.length; i++) {
+        if(!map[str[i]]) {
+            map[str[i]] = 1;
+        } else {
+            map[str[i]]++;
+        }
+    }
+
+    return map;
 }
 
-console.log('ab'.permutation('abc'));
+console.log('ab'.permutation('eidbaooo'));
 
 
 // 1.3
@@ -118,7 +157,7 @@ String.prototype.compressString = function() {
         };
     }
 
-    compressed = Object.entries(obj).toString().split(',').join('');
+    compressed = String(Object.entries(obj)).split(',').join('');
     
     return compressed >= this ? this : compressed;
 }
