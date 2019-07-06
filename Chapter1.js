@@ -26,8 +26,8 @@ console.log('Is unique:', 'aabc'.isUnique());
 // 1.2
 // Check Permutation: Given two strings, write a method to decide if one is a permutation of the other
 
-String.prototype.permutation = function(arg) {
-    const s1Map = getHashMap(this);
+String.prototype.isPermutationOf = function(arg) {
+    const thisMap = getHashMap(this);
     const queue = [];
 
     if (!this || !arg || this.length > arg.length) {
@@ -35,8 +35,8 @@ String.prototype.permutation = function(arg) {
     }
 
     for (const char of this) {
-        if (s1Map[char] > 0) {
-            s1Map[char]--;
+        if (thisMap[char] > 0) {
+            thisMap[char]--;
             queue.push(char);
             
             if (queue.length === this.length) {
@@ -47,8 +47,8 @@ String.prototype.permutation = function(arg) {
             while (queue.length) {
                 const firstIndex = queue.shift();
 
-                if (s1Map[firstIndex] !== char) {
-                    s1Map[firstIndex]++;
+                if (thisMap[firstIndex] !== char) {
+                    thisMap[firstIndex]++;
                 } else {
                     queue.push(char);
                     break;
@@ -74,7 +74,7 @@ function getHashMap(str) {
     return map;
 }
 
-console.log('ab'.permutation('eidbaooo'));
+console.log('ab'.isPermutationOf('eidbaooo'));
 
 
 // 1.3
@@ -198,10 +198,39 @@ console.log(arr.rotateImage());
 // Zero Matrix: Write an algorithm such that if an element in an MxN matrix is 0, its entire row and
 // column are set to 0. 
 
+function ifZeroSetZero(arr) {
+    let rowMin = 0;
+    let colMin = 0;
+
+    while (rowMin !== arr.length) {
+        if (arr[rowMin][colMin] !== 0) {
+            colMin++;
+            if (colMin === arr[rowMin].length) {
+                colMin = 0;
+                rowMin++;
+            }
+        } else {
+            arr[rowMin].fill(0);
+            for (let i = 0; i < arr.length; i++) {
+                arr[i][colMin] = 0;
+            }
+
+            break;
+        }
+    }
+    
+    return arr;
+};
+
+const matrix = [[1, 1, 1, 1],
+                [1, 0, 1, 1],
+                [1, 1, 1, 1]];
+
+console.log(ifZeroSetZero(matrix));
 
 
 // 1.9
-// Assumeyou have a method isSubstringwhich checks if oneword is a substring
+// Assume you have a method isSubstringwhich checks if oneword is a substring
 // of another. Given two strings, sl and s2, write code to check if s2 is a rotation of sl using only one
 // call to isSubstring (e.g., "waterbottle" is a rotation of"erbottlewat").
 
