@@ -5,8 +5,7 @@
 String.prototype.isUnique = function() {
     const obj = {};
 
-    for (let i = 0; i < this.length; i++) {
-        const char = this.charAt(i);
+    for (const char of this) {
         if (!obj[char]) {
             obj[char] = 1;
         } else {
@@ -14,7 +13,7 @@ String.prototype.isUnique = function() {
             if (obj[char] > 1) {
                 return false;
             }
-        };
+        }
     }
 
     return true
@@ -34,25 +33,13 @@ String.prototype.isPermutationOf = function(arg) {
         return false;
     }
 
-    for (const char of this) {
-        if (thisMap[char] > 0) {
+    for (const char of arg) {
+        if (thisMap[char] >= 1) {
             thisMap[char]--;
             queue.push(char);
             
             if (queue.length === this.length) {
                 return true;
-            }
-
-        } else {
-            while (queue.length) {
-                const firstIndex = queue.shift();
-
-                if (thisMap[firstIndex] !== char) {
-                    thisMap[firstIndex]++;
-                } else {
-                    queue.push(char);
-                    break;
-                }
             }
         }
     }
@@ -63,18 +50,18 @@ String.prototype.isPermutationOf = function(arg) {
 function getHashMap(str) {
     const map = {};
 
-    for (let i = 0; i < str.length; i++) {
-        if(!map[str[i]]) {
-            map[str[i]] = 1;
+    for (const char of str) {
+        if(!map[char]) {
+            map[char] = 1;
         } else {
-            map[str[i]]++;
+            map[char]++;
         }
     }
 
     return map;
 }
 
-console.log('ab'.isPermutationOf('eidbaooo'));
+console.log(`Is permutation:`, 'ab'.isPermutationOf('adefg'));
 
 
 // 1.3
@@ -95,7 +82,7 @@ String.prototype.URLify = function() {
         }
     };
 
-    // Replacing spaces with '%20'
+    // Replacing remaining spaces in between words with '%20'
     for (let j = 0; j < Object.values(obj).length; j++) {
         if (obj[j] === ' ') {
             obj[j] = urlSpace;
@@ -105,7 +92,7 @@ String.prototype.URLify = function() {
     return Object.values(obj).join('');
 }
 
-console.log('das g ma   '.URLify());
+console.log(`URLified:`, 'das g ma   '.URLify());
 
 // 1.4
 // Palindrome Permutation: Given a string, write a function to check if it is a permutation of a palindrome. 
@@ -230,7 +217,23 @@ console.log(ifZeroSetZero(matrix));
 
 
 // 1.9
-// Assume you have a method isSubstringwhich checks if oneword is a substring
+// Assume you have a method isSubstring which checks if one word is a substring
 // of another. Given two strings, sl and s2, write code to check if s2 is a rotation of sl using only one
-// call to isSubstring (e.g., "waterbottle" is a rotation of"erbottlewat").
+// call to isSubstring (e.g., "waterbottle" is a rotation of "erbottlewat").
+
+function isSubstring(s1, s2) {
+    
+    if (s1.length !== s2.length || !s1 || !s2) {
+        return false;
+    }
+
+    const rotatedS1 = [...s1].reduce((a, b) => {
+        return b + a;
+    });
+
+    return rotatedS1 === s2;
+
+}
+
+console.log(isSubstring('waterbottle', 'erbottlewat'));
 
