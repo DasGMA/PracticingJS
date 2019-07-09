@@ -9,17 +9,14 @@ String.prototype.isUnique = function() {
         if (!obj[char]) {
             obj[char] = 1;
         } else {
-            obj[char]++;
-            if (obj[char] > 1) {
-                return false;
-            }
+            return false;
         }
     }
 
-    return true
+    return true;
 };
 
-console.log('Is unique:', 'aabc'.isUnique());
+console.log('Is unique:', 'abc'.isUnique());
 
 
 // 1.2
@@ -45,7 +42,13 @@ String.prototype.isPermutationOf = function(arg) {
     }
 
     return false;
+
+
 };
+
+function isPermutationOf(s1, s2) {
+    return s1.split('').sort().join('') === s2.split('').sort().join('');
+}
 
 function getHashMap(str) {
     const map = {};
@@ -61,7 +64,8 @@ function getHashMap(str) {
     return map;
 }
 
-console.log(`Is permutation:`, 'ab'.isPermutationOf('adefg'));
+console.log(`Is permutation:`, isPermutationOf('dbefgab', 'abdbefg'));
+console.log(`Is permutation:`, 'dbefgab'.isPermutationOf('abdbefg'));
 
 
 // 1.3
@@ -92,6 +96,14 @@ String.prototype.URLify = function() {
     return Object.values(obj).join('');
 }
 
+function url(str) {
+    return str.split('').map(char => {
+        if (char === ' ') return '%20';
+        return char;
+    }).join('');
+};
+
+console.log(`URLified:`,url('das g ma'));
 console.log(`URLified:`, 'das g ma   '.URLify());
 
 // 1.4
@@ -123,6 +135,7 @@ console.log(`One away:`, 'pales'.oneAway('pale'));   // true
 console.log(`One away:`, 'pale'.oneAway('bale'));    // true
 console.log(`One away:`, 'pale'.oneAway('bake'));    // false
 console.log(`One away:`, 'paler'.oneAway('bake'));    // false
+console.log(`One away:`, 'paler'.oneAway('bake'));    // false
 
 
 // 1.6
@@ -141,7 +154,7 @@ String.prototype.compressString = function() {
             obj[char] = 1;
         } else {
             obj[char]++;
-        };
+        }
     }
 
     compressed = String(Object.entries(obj)).split(',').join('');
@@ -223,9 +236,7 @@ console.log(ifZeroSetZero(matrix));
 
 function isSubstring(s1, s2) {
     
-    if (s1.length !== s2.length || !s1 || !s2) {
-        return false;
-    }
+    if (s1.length !== s2.length || !s1 || !s2) return false;
 
     const rotatedS1 = [...s1].reduce((a, b) => {
         return b + a;
