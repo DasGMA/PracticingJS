@@ -22,10 +22,39 @@ class Node {
 }
 
 class LinkedList {
-    constructor(head = null) {
+    constructor(head = null, tail = null) {
         this.head = head;
+        this.tail = tail;
     }
 
+    setHead(value) {
+        const newNode = new Node(value, this.head, null);
+        if (this.head) {
+            this.head.prev = newNode;
+        } else {
+            this.tail = newNode;
+        }
+
+        this.head = newNode;
+    }
+
+    setTail(value) {
+        const newNode = new Node(value, null, this.tail);
+        if (this.tail) {
+            this.tail.next = newNode;
+        } else {
+            this.head = newNode;
+        }
+        this.tail = newNode;
+    }
+
+    deleteHead() {
+
+    }
+
+    deleteTail() {
+
+    }
 
 
 }
